@@ -1,0 +1,18 @@
+/* Estilos en tu archivo CSS o en un styled-component */
+.horizontal_scroll_bar {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 5px;
+  background-color: #ccc;
+  z-index: 9999;
+}
+
+.progress_bar {
+  height: 100%;
+  background-color: #532EE4; /* Color de la barra de progreso */
+}

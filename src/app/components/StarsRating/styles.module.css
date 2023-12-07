@@ -1,0 +1,20 @@
+.starsRating_container{
+    border: 1px solid #E1E1EE;
+    background: #F8F8FC;
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    position: relative;
+    overflow: hidden;
+}
+.starsRating_container .rate_stripe{
+    position: absolute;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    background: #F45D6F;
+    height: 100%;
+    border: 1px solid #E1E1EE;
+    padding: 1px;
+}
+

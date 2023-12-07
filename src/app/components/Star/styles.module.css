@@ -1,0 +1,44 @@
+.star_active { 
+    background:#532EE4;
+    color: #532EE4;
+    width: 54px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+}
+
+.star_active small {
+    position: absolute;
+    top: 19px;
+    z-index: 1;
+    width: 15px;
+    height: 13px;
+    background: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.star { 
+    color: #ffffff;
+    width: 54px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+}
+
+.star small {
+    position: absolute;
+    top: 19px;
+    z-index: 1;
+    width: 15px;
+    height: 13px;
+    background: #8F90BE;
+    text-align: center;
+}

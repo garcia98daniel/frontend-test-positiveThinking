@@ -1,0 +1,31 @@
+.footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.language_container{
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8F90BE !important;
+    border-radius: 8px;
+    padding:10px 12px 10px 12px;
+    border: 1px solid #E1E1EE;
+    font-weight: 700;
+    font-size: 12px !important;
+}
+
+.footer p{
+    color: #55577E;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.footer a{
+    color: #532EE4;
+    text-decoration: none;
+}

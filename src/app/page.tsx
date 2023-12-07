@@ -1,95 +1,94 @@
+"use client";
 import Image from 'next/image'
 import styles from './page.module.css'
+import ScrollBar from './components/ScrollBar/ScrollBar'
+import { useEffect, useState } from 'react';
+import { ICompany, IFormData, IImproveOptions, IUser } from '@/ts-types/custom.types';
+import RatingSlider from './components/RatingSlider/RatingSlider';
+import RatingSliderWithMultiChoice from './components/RatingSliderWithMultiChoice/RatingSliderWithMultiChoice';
+import ExtraFeedBack from './components/ExtraFeedBack/ExtraFeedBack';
+import Footer from './components/Footer/Footer';
 
 export default function Home() {
+  const [user, setUser] = useState<IUser>();
+  const [company, setCompany] = useState<ICompany>();
+  const [improveOptions, setImproveOptions] = useState<IImproveOptions[]>([
+    {
+      description: "Quality of feedback",
+    },
+    {
+      description: "Actionability of feedback",
+    },
+    {
+      description: "Openness to receive peer feedback",
+    },
+    {
+      description: "Other",
+    },
+  ]);
+
+  const [formData, setFormData] = useState<IFormData>({
+    rate_slider_one: 3,
+    rate_slider_one_comment: "",
+    rate_slider_two: 1,
+
+    to_improve:{
+      improve:"",
+      comment:"",
+    },
+
+    extra_feedback:"",
+  });
+
+
+  useEffect(() => {
+    fetch('/fakeData/user.json') 
+      .then(response => response.json())
+      .then(data => { console.log(data)
+        return setUser(data)})
+      .catch(error => console.error('Error fetching data1:', error));
+
+    fetch('/fakeData/company.json') 
+      .then(response => response.json())
+      .then(data => setCompany(data))
+      .catch(error => console.error('Error fetching data2:', error));
+  }, []); 
+
+
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <ScrollBar />
+
+      <section className={styles.logo_and_company_section}>
+        <Image src={"/butterfly-icon-color.svg"} alt="logo" height="36" width="36"/>
+
+        <p>{company?.company_name}</p>
+      </section>
+
+      <form className={styles.form}>
+        <h2 className={styles.form_h2}>Hi {user?.name},</h2>
+        <p className={styles.p_txt}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ullamcorper nisl sed ante molestie, quis facilisis risus placerat. Morbi mattis, lectus in sollicitudin tristique, quam sem aliquam augue.</p>
+        <h3 className={styles.form_h3}>Do you agree with the following statements:</h3>
+
+        <RatingSlider value={formData.rate_slider_one} setFormData={setFormData} key_name={"rate_slider_one"} commentValue={formData.rate_slider_one_comment}/>
+
+        <div className={styles.separator}>
+          <span>SEPEARATOR</span> 
+          <div></div>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        <RatingSliderWithMultiChoice improveOptions={improveOptions} value={formData.rate_slider_two} setFormData={setFormData} key_name={"rate_slider_two"}/>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        <ExtraFeedBack inputValue={formData.extra_feedback}  setFormData={setFormData} />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <div className={styles.btn_container}>
+          <button type='submit'>Submit <Image src={"/arrow_right.svg"} alt="arrow" width={24} height={24}/></button>
+        </div>
+      </form>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+      <Footer/>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
   )
 }
