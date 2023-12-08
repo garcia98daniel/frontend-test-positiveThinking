@@ -10,9 +10,11 @@ interface IRatingSliderWithMultiChoiceProps {
     setFormData: Dispatch<SetStateAction<IFormData>>;
     value:number;
     key_name:string;
+    improve:string;
+    improve_comment:string;
 }
 
-function RatingSliderWithMultiChoice({value, improveOptions, setFormData, key_name}:IRatingSliderWithMultiChoiceProps) {
+function RatingSliderWithMultiChoice({value, improveOptions, setFormData, key_name, improve, improve_comment}:IRatingSliderWithMultiChoiceProps) {
     return (
         <div className={styles.ratingSliderWithMultiChoice_wrapper}>
             <span ></span>
@@ -26,14 +28,26 @@ function RatingSliderWithMultiChoice({value, improveOptions, setFormData, key_na
                     <p>Strongly agree</p>
                 </div>
 
-                <h3 className={styles.ratingSliderWithMultiple_question}>Which of the following should we improve on?</h3>
-                <div className={styles.ratingSliderWithMultiple_improveQuestions_section}>
-                    {improveOptions.length && improveOptions.map((improveOption, index) => {
-                        return <ImproveQuestionItem key={index} description={improveOption.description} comment={"comment"} handleChangeComment={() => {}}/>
-                    })
+                {value < 5 && value !== 0 && 
+                <section>
+                    <h3 className={styles.ratingSliderWithMultiple_question}>Which of the following should we improve on?</h3>
+                    <div className={styles.ratingSliderWithMultiple_improveQuestions_section}>
+                        {improveOptions.length && improveOptions.map((improveOption, index) => {
+                            return <ImproveQuestionItem 
+                            key={index} 
+                            index={index}
+                            improve={improve}
+                            description={improveOption.description} 
+                            improve_comment={improve_comment} 
+                            setFormData={setFormData}
+                            />
+                        })
 
-                    }
-                </div>
+                        }
+                    </div>
+                </section>
+                }
+
             </div>
         </div>
     );

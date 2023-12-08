@@ -13,10 +13,8 @@ export interface IFormData{
   rate_slider_one_comment: string,
   rate_slider_two: number,
 
-  to_improve:{
     improve:string,
-    comment:string,
-  },
+    improve_comment:string,
 
   extra_feedback:string,
 }

@@ -24,7 +24,7 @@ function RatingSlider({value, setFormData, key_name, commentValue}:IRatingSlider
                     <p>Neutral</p>
                     <p>Strongly agree</p>
                 </div>
-                {value < 5 &&
+                {value < 5 && value !== 0 &&
                     <textarea 
                     className={styles.improveQuestionItem_textarea} 
                     id="story" 

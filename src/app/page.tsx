@@ -8,8 +8,11 @@ import RatingSlider from './components/RatingSlider/RatingSlider';
 import RatingSliderWithMultiChoice from './components/RatingSliderWithMultiChoice/RatingSliderWithMultiChoice';
 import ExtraFeedBack from './components/ExtraFeedBack/ExtraFeedBack';
 import Footer from './components/Footer/Footer';
+import { useRouter } from 'next/navigation';
+
 
 export default function Home() {
+  const router = useRouter();
   const [user, setUser] = useState<IUser>();
   const [company, setCompany] = useState<ICompany>();
   const [improveOptions, setImproveOptions] = useState<IImproveOptions[]>([
@@ -28,33 +31,48 @@ export default function Home() {
   ]);
 
   const [formData, setFormData] = useState<IFormData>({
-    rate_slider_one: 3,
+    rate_slider_one: 0,
     rate_slider_one_comment: "",
-    rate_slider_two: 1,
+    rate_slider_two: 0,
 
-    to_improve:{
       improve:"",
-      comment:"",
-    },
+      improve_comment:"",
 
     extra_feedback:"",
   });
 
 
   useEffect(() => {
-    fetch('/fakeData/user.json') 
-      .then(response => response.json())
-      .then(data => { console.log(data)
-        return setUser(data)})
-      .catch(error => console.error('Error fetching data1:', error));
+    const fetchData = async () => {
+      try {
+        const userResponse = await fetch('/fakeData/user.json');
+        const userData = await userResponse.json();
+        setUser(userData);
 
-    fetch('/fakeData/company.json') 
-      .then(response => response.json())
-      .then(data => setCompany(data))
-      .catch(error => console.error('Error fetching data2:', error));
-  }, []); 
+        const companyResponse = await fetch('/fakeData/company.json');
+        const companyData = await companyResponse.json();
+        setCompany(companyData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
+  const isSubmitDisabled =
+  formData.rate_slider_one < 5 && formData.rate_slider_one_comment === "" ||
+  formData.rate_slider_two < 5 && (formData.improve === "" || formData.improve_comment === "");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(isSubmitDisabled){
+      alert('Please complete all the field required')
+    }else{
+      router.push("/thanks")
+    }
+  }
 
   return (
     <main className={styles.main}>
@@ -66,7 +84,7 @@ export default function Home() {
         <p>{company?.company_name}</p>
       </section>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
         <h2 className={styles.form_h2}>Hi {user?.name},</h2>
         <p className={styles.p_txt}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ullamcorper nisl sed ante molestie, quis facilisis risus placerat. Morbi mattis, lectus in sollicitudin tristique, quam sem aliquam augue.</p>
         <h3 className={styles.form_h3}>Do you agree with the following statements:</h3>
@@ -78,12 +96,19 @@ export default function Home() {
           <div></div>
         </div>
 
-        <RatingSliderWithMultiChoice improveOptions={improveOptions} value={formData.rate_slider_two} setFormData={setFormData} key_name={"rate_slider_two"}/>
+        <RatingSliderWithMultiChoice 
+        improveOptions={improveOptions} 
+        value={formData.rate_slider_two} 
+        improve={formData.improve} 
+        improve_comment={formData.improve_comment} 
+        setFormData={setFormData} 
+        key_name={"rate_slider_two"
+        }/>
 
         <ExtraFeedBack inputValue={formData.extra_feedback}  setFormData={setFormData} />
 
         <div className={styles.btn_container}>
-          <button type='submit'>Submit <Image src={"/arrow_right.svg"} alt="arrow" width={24} height={24}/></button>
+          <button className={isSubmitDisabled ? styles.btn_disable :  styles.btn} type='submit'>Submit <Image src={"/arrow_right.svg"} alt="arrow" width={24} height={24}/></button>
         </div>
       </form>
 

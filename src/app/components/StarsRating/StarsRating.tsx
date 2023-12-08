@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IFormData } from "@/ts-types/custom.types";
 
 import styles from "./styles.module.css";
@@ -10,10 +10,37 @@ interface StarsRatingProps {
   key_name:string;
 }
 function StarsRating({ stars, setFormData, key_name }: StarsRatingProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  const [numberStars, setNumberStars] = useState(10);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if(window.innerWidth <= 768){
+        setNumberStars(5);
+      }else{
+        setNumberStars(10);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className={styles.starsRating_container}>
-        <div className={styles.rate_stripe} style={{width:`${(54*stars)-45}px`}}></div>
-      {Array.from(new Array(10)).map((star, index) => {
+      {stars > 0 &&
+        <div
+        className={styles.rate_stripe}
+        style={{ width: `${isMobile ? (54 * stars+1) : (54 * stars) - 45}px` }}
+      ></div>
+      }
+      {Array.from(new Array(numberStars)).map((star, index) => {
         if (stars === index + 1) {
           return (
             <Star

@@ -12,6 +12,11 @@ function ExtraFeedBack({inputValue, setFormData} : IExtraFeedBackProps) {
   return (
     <div className={styles.extraFeedBack_wrapper}>
       <span></span>
+      <div className={styles.bubble_extra_feedback}>
+        Extra
+        feedback
+        helps
+      </div>
       <div className={styles.extraFeedBack_container}>
         <p className={styles.p_txt}>3 of 3 | Open ended</p>
         <h2>Would you like to add anything?</h2>

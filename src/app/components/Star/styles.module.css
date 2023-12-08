@@ -40,6 +40,9 @@
     position: relative;
     cursor: pointer;
 }
+.star:hover { 
+    transform: scale(1.2);
+}
 
 .star small {
     position: absolute;
