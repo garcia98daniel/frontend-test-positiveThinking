@@ -19,21 +19,33 @@ function StarsRating({ stars, setFormData, key_name }: StarsRatingProps) {
             <Star
               setFormData={setFormData}
               key_name={key_name}
-              active
+              status={"active"}
               key={index}
               rate={index + 1}
             />
           );
-        } else {
+        } else if(stars < index + 1){
           return (
             <Star 
             setFormData={setFormData} 
             key_name={key_name}
+            status={"notActive"}
+            key={index} 
+            rate={index + 1} 
+            />
+          );
+        }else if(stars > index + 1){
+          return (
+            <Star 
+            setFormData={setFormData} 
+            key_name={key_name}
+            status={"surpassed"}
             key={index} 
             rate={index + 1} 
             />
           );
         }
+
       })}
     </div>
   );
