@@ -37,7 +37,10 @@ function StarsRating({ stars, setFormData, key_name }: StarsRatingProps) {
       {stars > 0 &&
         <div
         className={styles.rate_stripe}
-        style={{ width: `${isMobile ? (54 * stars+1) : (54 * stars) - 45}px` }}
+        style={{ 
+          width: `${isMobile ? (54 * stars+1) : (54 * stars) - 45}px`,
+          background: `${stars >= 9  ? "#55e3b1" : stars >= 5 ? "#ffd147" : "#F45D6F"}`
+        }}
       ></div>
       }
       {Array.from(new Array(numberStars)).map((star, index) => {

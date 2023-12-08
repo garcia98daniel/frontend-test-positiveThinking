@@ -1,0 +1,29 @@
+.thanks_page{
+    min-height: 95vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+
+.thanks_card{
+    color: white;
+    padding: 24px 48px;
+    border-radius: 10px;
+    font-size: 2em;
+    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #55577E;
+}
+
+.thanks_img{
+    position: relative;
+    width: 100%;
+    height: 200px;
+}
