@@ -15,7 +15,7 @@
 
 .star_active:hover {
   transform: scale(0.8);
-  transition: transform 0.2s ease 0.2s;
+  transition: transform 0.1s ease 0.1s;
 }
   
 
@@ -63,6 +63,9 @@
     border-radius: 100px;
     position: relative;
     cursor: pointer;
+}
+.star_surpassed:hover { 
+    transform: scale(1.2);
 }
 
 .star_surpassed small {
